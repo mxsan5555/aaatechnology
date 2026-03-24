@@ -20,6 +20,7 @@ export default function HomePage() {
       <SuccessStories />
       <FAQSection />
       <NewsletterFooter />
+      <p>Footer</p>
     </main>
   );
 }
