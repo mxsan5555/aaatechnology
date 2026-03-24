@@ -2,27 +2,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { User, Mail, Phone, MapPin } from "lucide-react";
+import aaaLogo from "@/assets/aaa-logo.png";
 import { useEffect, useRef } from "react";
 
 const footerLinks = {
-  Company: ["About Us", "Careers", "News & Updates", "Contact"],
+  Company: ["About Us", "Leadership", "Awards & Recognition", "Investor Relations", "Contact"],
   Services: [
-    "Digital Experience & Design",
-    "Enterprise Business Solutions",
-    "Emerging Technologies",
-    "Content & Digital Marketing",
-    "Technology Advisory",
-    "Cybersecurity & Risk Management",
+    "IT Systems Audit",
+    "Cyber Security Audit",
+    "IT Security Audit",
+    "IT Assurance & Compliance",
+    "IT Governance",
+    "IS Audit & Certification",
   ],
-  Solution: [
-    "Smart Mobility & Logistics",
-    "AI-Powered Security & Recognition",
-    "Hospitality & Customer Experience",
-    "Enterprise Workforce & Client Solutions",
-    "Healthcare & Life SciencesD",
-    "Education & EdTech",
-    "Financial & Banking Solutions",
-    "Geospatial & Location Intelligence",
+  Industries: [
+    "Banking & Financial Services",
+    "Government & Public Sector",
+    "Healthcare & Pharmaceuticals",
+    "Manufacturing & Industry",
+    "Telecom & Media",
+    "Retail & E-commerce",
+    "IT & IT-Enabled Services",
+    "Energy & Utilities",
   ],
 };
 
@@ -52,7 +53,7 @@ export function NewsletterFooter() {
   }, []);
 
   return (
-    <footer className="bg-background border-t border-border">
+    <footer className="bg-background border-t border-border" role="contentinfo" aria-label="Site footer">
       {/* Newsletter Section with Parallax */}
       <div
         ref={parallaxRef}
@@ -73,19 +74,33 @@ export function NewsletterFooter() {
                 Join our newsletter to keep up to date with us!
               </h3>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+            <form
+              className="flex flex-col sm:flex-row gap-4 w-full max-w-md"
+              aria-label="Newsletter subscription"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <div className="relative flex-1">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Email address
+                </label>
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
                 <Input
+                  id="newsletter-email"
+                  name="email"
                   placeholder="Enter your email"
                   className="pl-10"
                   type="email"
+                  autoComplete="email"
+                  required
                 />
               </div>
-              <Button className="bg-advance-secondary hover:bg-advance-secondary/90 text-black px-8">
+              <Button
+                type="submit"
+                className="bg-advance-secondary hover:bg-advance-secondary/90 text-white px-8"
+              >
                 Subscribe
               </Button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -99,40 +114,43 @@ export function NewsletterFooter() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
             <div className="space-y-4">
-              <div className="text-2xl font-bold text-advance-primary">
-                Advance IOT Technical Solutions LLC-SPC
-              </div>
+              <img
+                src={aaaLogo}
+                alt="AAA Technologies Limited"
+                className="h-10 w-auto object-contain"
+              />
               <p className="text-muted-foreground text-pretty">
-                Transforming businesses with innovative IoT solutions and expert
-                consulting services.
+                India's 1st and only listed company focused exclusively on
+                Information Technology & Cyber Security Audit. CERT-In
+                empanelled since 2005.
               </p>
               {/* Contact Info */}
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3 text-muted-foreground">
-                  <Mail className="h-4 w-4 text-advance-primary" />
-                  <a 
-                    href="mailto:info@advanceiot.com" 
+                  <Mail className="h-4 w-4 text-advance-primary" aria-hidden="true" />
+                  <a
+                    href="mailto:info@aaatechnologies.co.in"
                     className="hover:text-advance-primary transition-colors"
                   >
-                    info@advanceiot.com
+                    info@aaatechnologies.co.in
                   </a>
                 </div>
                 <div className="flex items-center gap-3 text-muted-foreground">
-                  <Phone className="h-4 w-4 text-advance-primary" />
-                  <a 
-                    href="tel:+15551234567" 
+                  <Phone className="h-4 w-4 text-advance-primary" aria-hidden="true" />
+                  <a
+                    href="tel:02228573815"
                     className="hover:text-advance-primary transition-colors"
                   >
-                    +1 (555) 123-4567
+                    022-28573815 / 16
                   </a>
                 </div>
                 <div className="flex items-start gap-3 text-muted-foreground">
-                  <MapPin className="h-4 w-4 text-advance-primary mt-0.5" />
+                  <MapPin className="h-4 w-4 text-advance-primary mt-0.5" aria-hidden="true" />
                   <div className="flex-1">
                     <address className="not-italic hover:text-advance-primary transition-colors">
-                      123 Business District<br />
-                      Tech City, TC 12345<br />
-                      United States
+                      278-280, F Wing, Solaris 1,<br />
+                      Saki Vihar Road, Powai,<br />
+                      Mumbai 400072, India
                     </address>
                   </div>
                 </div>
@@ -168,8 +186,7 @@ export function NewsletterFooter() {
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-muted-foreground">
-              © 2025 Advance IOT Technical Solutions LLC-SPC. All rights
-              reserved.
+              © 2026 AAA Technologies Limited. All rights reserved.
             </div>
             <div className="flex gap-6 text-sm">
               <a

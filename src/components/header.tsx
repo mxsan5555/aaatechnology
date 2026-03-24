@@ -4,397 +4,465 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import logo from '../assets/advance-iot-logo.png'
+import aaaLogo from "@/assets/aaa-logo.png";
+
+// ─── Nav data ────────────────────────────────────────────────────────────────
+
+const servicesData = [
+  {
+    title: "IT Systems Audit",
+    items: [
+      "Management Controls Assessment",
+      "IT Infrastructure Review",
+      "System Reliability & Integrity Audit",
+    ],
+  },
+  {
+    title: "Cyber Security Audit",
+    items: [
+      "Cyber Security Posture Assessment",
+      "Vulnerability & Threat Analysis",
+      "Security Controls Evaluation",
+    ],
+  },
+  {
+    title: "IT Security Audit",
+    items: [
+      "Information Security Level Audit",
+      "Access Control & Data Protection Review",
+      "Security Policy & Procedure Assessment",
+    ],
+  },
+  {
+    title: "IT Assurance & Compliance",
+    items: [
+      "IT Compliance Verification",
+      "Regulatory Framework Adherence",
+      "Process Assurance & Risk Mitigation",
+    ],
+  },
+  {
+    title: "IT Governance",
+    items: [
+      "IT Risk Management",
+      "Performance & Control Frameworks",
+      "Board-Level IT Governance Advisory",
+    ],
+  },
+  {
+    title: "IS Audit & Certification",
+    items: [
+      "CERT-In Empanelled Audits",
+      "ISO 27001 Compliance Audits",
+      "Information Systems Audit (ISA)",
+    ],
+  },
+];
+
+const industriesData = [
+  {
+    title: "Banking, Financial Services & Insurance",
+    items: [
+      "Core Banking IT Audit",
+      "NBFC & Insurance Compliance Review",
+      "Fraud Risk & Financial Systems Audit",
+    ],
+  },
+  {
+    title: "Government & Public Sector",
+    items: [
+      "e-Governance IT Audit",
+      "Public Sector Cyber Security Assessment",
+      "Regulatory Compliance for PSUs",
+    ],
+  },
+  {
+    title: "Healthcare & Pharmaceuticals",
+    items: [
+      "Hospital IT Systems Audit",
+      "Clinical Data Security & Compliance",
+      "Pharma IT Governance Review",
+    ],
+  },
+  {
+    title: "Manufacturing & Industry",
+    items: [
+      "OT & SCADA Security Audit",
+      "ERP Systems Audit",
+      "Industrial Cyber Security Assessment",
+    ],
+  },
+  {
+    title: "Telecom & Media",
+    items: [
+      "Network Infrastructure Security Audit",
+      "Telecom Regulatory Compliance",
+      "Data Privacy & Protection Review",
+    ],
+  },
+  {
+    title: "Retail & E-commerce",
+    items: [
+      "PCI-DSS Compliance Audit",
+      "E-commerce Platform Security Review",
+      "Customer Data Protection Audit",
+    ],
+  },
+  {
+    title: "IT & IT-Enabled Services",
+    items: [
+      "ISO 27001 Implementation Audit",
+      "SOC & ITES Security Assessment",
+      "Third-Party Vendor Risk Review",
+    ],
+  },
+  {
+    title: "Energy & Utilities",
+    items: [
+      "Critical Infrastructure Security Audit",
+      "SCADA & ICS Cyber Security Review",
+      "Energy Sector Compliance Assessment",
+    ],
+  },
+];
+
+// ─── Shared class tokens ──────────────────────────────────────────────────────
+
+// bg-gray-100 gives a light neutral grey that keeps the logo legible in all modes
+const HEADER_BG   = "bg-gray-100 dark:bg-gray-100";
+const HEADER_TEXT = "text-slate-700 dark:text-slate-800";
+const NAV_HOVER   = "hover:text-red-800 dark:hover:text-red-700 focus-visible:text-red-800";
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen]       = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const dropdownRef    = useRef<HTMLDivElement>(null);
+  const hoverTimeout   = useRef<NodeJS.Timeout | null>(null);
 
+  // Close dropdown when clicking outside
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+    function onClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setActiveDropdown(null);
       }
     }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
 
-  const handleMouseEnter = (dropdown: string) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
+  // Close mobile menu + dropdowns on resize to desktop
+  useEffect(() => {
+    function onResize() {
+      if (window.innerWidth >= 1024) {
+        setIsMenuOpen(false);
+        setActiveDropdown(null);
+      }
     }
-    setActiveDropdown(dropdown);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const openDropdown  = (key: string) => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    setActiveDropdown(key);
   };
-
-  const handleMouseLeave = () => {
-    hoverTimeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 150); // Small delay to prevent flickering
+  const closeDropdown = () => {
+    hoverTimeout.current = setTimeout(() => setActiveDropdown(null), 150);
   };
+  const toggleDropdown = (key: string) =>
+    setActiveDropdown(activeDropdown === key ? null : key);
 
-  const toggleDropdown = (dropdown: string) => {
-    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
-  };
-
-  const servicesData = [
-    {
-      title: "Digital Experience & Design",
-      items: [
-        "UI/UX Design & Prototyping",
-        "Web & Application Development",
-        "Mobile App Engineering",
-      ],
-    },
-    {
-      title: "Enterprise Business Solutions",
-      items: [
-        "ERP & CRM Implementation",
-        "Cloud Transformation & Migration",
-        "Business Intelligence & Data Analytics",
-      ],
-    },
-    {
-      title: "Emerging Technologies",
-      items: [
-        "Blockchain & Web3 Solutions",
-        "AI & Machine Learning Services",
-        "IoT & Edge Computing",
-      ],
-    },
-    {
-      title: "Content & Digital Marketing",
-      items: [
-        "Content Strategy & Creation",
-        "Digital Marketing & Growth Solutions",
-      ],
-    },
-    {
-      title: "Technology Advisory",
-      items: [
-        "IT Consulting & Strategy",
-        "Software Product Engineering",
-        "Cloud-Native DevOps & Automation",
-      ],
-    },
-    {
-      title: "Cybersecurity & Risk Management",
-      items: [
-        "Managed Security Services (MSSP)",
-        "Identity & Access Management (IAM)",
-        "Risk & Compliance Advisory",
-      ],
-    },
-  ];
-
-  const solutionsData = [
-    {
-      title: "Smart Mobility & Logistics",
-      items: [
-        "Fleet & Asset Management Platform",
-        "Connected Vehicle & Telematics Solutions",
-        "Logistics & Supply Chain Optimization",
-      ],
-    },
-    {
-      title: "AI-Powered Security & Recognition",
-      items: [
-        "Facial Recognition & Biometric Authentication",
-        "Smart Surveillance & Video Analytics",
-      ],
-    },
-    {
-      title: "Hospitality & Customer Experience",
-      items: [
-        "Hotel & Hospitality Management System (HMS)",
-        "Smart Guest Experience Solutions",
-      ],
-    },
-    {
-      title: "Enterprise Workforce & Client Solutions",
-      items: [
-        "Human Capital Management (HCM) Systems",
-        "Customer Experience & CRM Platforms",
-        "ERP Extensions for HR, Finance & Operations",
-      ],
-    },
-    {
-      title: "Healthcare & Life Sciences",
-      items: [
-        "Hospital Information Management System (HIMS)",
-        "Telemedicine & Remote Patient Monitoring",
-        "Healthcare Compliance & Data Security",
-      ],
-    },
-    {
-      title: "Education & EdTech",
-      items: [
-        "Smart Campus & University Management",
-        "Virtual Learning & Assessment Platforms",
-      ],
-    },
-    {
-      title: "Financial & Banking Solutions",
-      items: [
-        "Loan Origination & Automation System",
-        "Digital Banking & FinTech Platforms",
-        "Fraud Detection & Risk Management",
-      ],
-    },
-    {
-      title: "Geospatial & Location Intelligence",
-      items: ["GIS & Spatial Analytics", "GPS & Asset Tracking Solutions"],
-    },
-  ];
+  const toggleMobileKey = (key: string) =>
+    setActiveDropdown(activeDropdown === key ? null : key);
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <div className="text-2xl font-bold text-advance-primary">
-              <a href="#home"> <img src={logo} alt="Advance IOT Technical Solutions LLC-SPC" /> </a>
-            </div>
-          </div>
+    <header
+      className={`${HEADER_BG} border-b border-slate-200 dark:border-slate-300 shadow-sm sticky top-0 z-50`}
+      role="banner"
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-18">
 
-          {/* Desktop Navigation */}
+          {/* ── Logo ─────────────────────────────────────────────────────── */}
+          <a
+            href="#main-content"
+            aria-label="AAA Technologies Limited — return to top"
+            className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2 rounded"
+          >
+            <img
+              src={aaaLogo}
+              alt="AAA Technologies Limited"
+              className="h-11 w-auto object-contain"
+              width={160}
+              height={44}
+            />
+          </a>
+
+          {/* ── Desktop navigation ───────────────────────────────────────── */}
           <nav
-            className="hidden lg:flex items-center space-x-8"
+            className="hidden lg:flex items-center gap-1"
             ref={dropdownRef}
+            aria-label="Main navigation"
           >
             <a
-              href="#home"
-              className="text-foreground hover:text-advance-primary transition-colors"
+              href="#main-content"
+              aria-current="page"
+              className={`px-3 py-2 text-sm font-medium rounded ${HEADER_TEXT} ${NAV_HOVER} transition-colors`}
             >
               Home
             </a>
 
-            {/* Services Dropdown */}
+            {/* Services */}
             <div
               className="relative"
-              onMouseEnter={() => handleMouseEnter("services")}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => openDropdown("services")}
+              onMouseLeave={closeDropdown}
             >
               <button
+                type="button"
                 onClick={() => toggleDropdown("services")}
-                className="flex items-center gap-1 text-foreground hover:text-advance-primary transition-colors cursor-pointer"
+                className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded ${HEADER_TEXT} ${NAV_HOVER} transition-colors`}
+                aria-expanded={activeDropdown === "services"}
+                aria-controls="services-dropdown"
+                aria-haspopup="true"
               >
                 Services
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform duration-200 ${
-                    activeDropdown === "services" ? "rotate-180" : ""
-                  }`}
+                  className={`h-4 w-4 transition-transform duration-200 ${activeDropdown === "services" ? "rotate-180" : ""}`}
+                  aria-hidden="true"
                 />
               </button>
             </div>
 
-            {/* Solutions Dropdown */}
+            {/* Industries */}
             <div
               className="relative"
-              onMouseEnter={() => handleMouseEnter("solutions")}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => openDropdown("industries")}
+              onMouseLeave={closeDropdown}
             >
               <button
-                onClick={() => toggleDropdown("solutions")}
-                className="flex items-center gap-1 text-foreground hover:text-advance-primary transition-colors cursor-pointer"
+                type="button"
+                onClick={() => toggleDropdown("industries")}
+                className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded ${HEADER_TEXT} ${NAV_HOVER} transition-colors`}
+                aria-expanded={activeDropdown === "industries"}
+                aria-controls="industries-dropdown"
+                aria-haspopup="true"
               >
-                Solutions
+                Industries
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform duration-200 ${
-                    activeDropdown === "solutions" ? "rotate-180" : ""
-                  }`}
+                  className={`h-4 w-4 transition-transform duration-200 ${activeDropdown === "industries" ? "rotate-180" : ""}`}
+                  aria-hidden="true"
                 />
               </button>
             </div>
 
             <a
               href="#about"
-              className="text-foreground hover:text-advance-primary transition-colors"
+              className={`px-3 py-2 text-sm font-medium rounded ${HEADER_TEXT} ${NAV_HOVER} transition-colors`}
             >
               About
             </a>
             <a
               href="#blog"
-              className="text-foreground hover:text-advance-primary transition-colors"
+              className={`px-3 py-2 text-sm font-medium rounded ${HEADER_TEXT} ${NAV_HOVER} transition-colors`}
             >
               Blog
             </a>
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          {/* ── Desktop actions ───────────────────────────────────────────── */}
+          <div className="hidden lg:flex items-center gap-3">
             <ThemeToggle />
             <Button className="bg-advance-primary hover:bg-advance-primary/90 text-white">
-              Book a Demo
+              Contact Us
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* ── Mobile toggle ─────────────────────────────────────────────── */}
           <div className="lg:hidden flex items-center gap-2">
             <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
+              type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-nav"
+              className={`p-2 rounded ${HEADER_TEXT} hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center`}
             >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </Button>
+              {isMenuOpen
+                ? <X    className="h-6 w-6" aria-hidden="true" />
+                : <Menu className="h-6 w-6" aria-hidden="true" />
+              }
+            </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* ── Mobile navigation panel ──────────────────────────────────────── */}
         {isMenuOpen && (
-          <nav className="lg:hidden mt-4 pb-4 border-t border-border pt-4">
-            <div className="flex flex-col space-y-4">
-              <a
-                href="#home"
-                className="text-foreground hover:text-advance-primary transition-colors"
-              >
-                Home
-              </a>
+          <nav
+            id="mobile-nav"
+            aria-label="Mobile navigation"
+            className="lg:hidden border-t border-slate-200 dark:border-slate-300 py-4"
+          >
+            <ul role="list" className="flex flex-col gap-1">
 
-              {/* Mobile Services */}
-              <div>
+              <li>
+                <a
+                  href="#main-content"
+                  aria-current="page"
+                  className={`block px-3 py-2.5 text-sm font-medium rounded ${HEADER_TEXT} hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Home
+                </a>
+              </li>
+
+              {/* Mobile — Services accordion */}
+              <li>
                 <button
-                  onClick={() =>
-                    setActiveDropdown(
-                      activeDropdown === "mobile-services"
-                        ? null
-                        : "mobile-services"
-                    )
-                  }
-                  className="flex items-center justify-between w-full text-foreground hover:text-advance-primary transition-colors"
+                  type="button"
+                  onClick={() => toggleMobileKey("mob-services")}
+                  aria-expanded={activeDropdown === "mob-services"}
+                  aria-controls="mob-services-panel"
+                  className={`flex items-center justify-between w-full px-3 py-2.5 text-sm font-medium rounded ${HEADER_TEXT} hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors min-h-[44px]`}
                 >
                   Services
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform ${
-                      activeDropdown === "mobile-services" ? "rotate-180" : ""
-                    }`}
+                    className={`h-4 w-4 transition-transform duration-200 ${activeDropdown === "mob-services" ? "rotate-180" : ""}`}
+                    aria-hidden="true"
                   />
                 </button>
-                {activeDropdown === "mobile-services" && (
-                  <div className="mt-2 ml-4 space-y-3">
-                    {servicesData.map((service, index) => (
-                      <div key={index}>
-                        <h5 className="font-medium text-advance-primary text-sm">
+                {activeDropdown === "mob-services" && (
+                  <ul
+                    id="mob-services-panel"
+                    role="list"
+                    className="mt-1 ml-3 border-l-2 border-slate-200 dark:border-slate-300 pl-4 space-y-3 pb-2"
+                  >
+                    {servicesData.map((service) => (
+                      <li key={service.title}>
+                        <p className="text-xs font-semibold text-red-700 dark:text-red-700 uppercase tracking-wide mb-1">
                           {service.title}
-                        </h5>
-                        <ul className="mt-1 space-y-1">
-                          {service.items.map((item, itemIndex) => (
-                            <li key={itemIndex}>
+                        </p>
+                        <ul role="list" className="space-y-0.5">
+                          {service.items.map((item) => (
+                            <li key={item}>
                               <a
-                                href="#"
-                                className="text-xs text-muted-foreground hover:text-advance-primary transition-colors block py-1 ml-2"
+                                href="#services"
+                                className={`block py-1 text-xs ${HEADER_TEXT} hover:text-red-800 dark:hover:text-red-700 transition-colors`}
+                                onClick={() => setIsMenuOpen(false)}
                               >
                                 {item}
                               </a>
                             </li>
                           ))}
                         </ul>
-                      </div>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
-              </div>
+              </li>
 
-              {/* Mobile Solutions */}
-              <div>
+              {/* Mobile — Industries accordion */}
+              <li>
                 <button
-                  onClick={() =>
-                    setActiveDropdown(
-                      activeDropdown === "mobile-solutions"
-                        ? null
-                        : "mobile-solutions"
-                    )
-                  }
-                  className="flex items-center justify-between w-full text-foreground hover:text-advance-primary transition-colors"
+                  type="button"
+                  onClick={() => toggleMobileKey("mob-industries")}
+                  aria-expanded={activeDropdown === "mob-industries"}
+                  aria-controls="mob-industries-panel"
+                  className={`flex items-center justify-between w-full px-3 py-2.5 text-sm font-medium rounded ${HEADER_TEXT} hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors min-h-[44px]`}
                 >
-                  Solutions
+                  Industries
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform ${
-                      activeDropdown === "mobile-solutions" ? "rotate-180" : ""
-                    }`}
+                    className={`h-4 w-4 transition-transform duration-200 ${activeDropdown === "mob-industries" ? "rotate-180" : ""}`}
+                    aria-hidden="true"
                   />
                 </button>
-                {activeDropdown === "mobile-solutions" && (
-                  <div className="mt-2 ml-4 space-y-3 max-h-64 overflow-y-auto">
-                    {solutionsData.map((solution, index) => (
-                      <div key={index}>
-                        <h5 className="font-medium text-advance-primary text-sm">
-                          {solution.title}
-                        </h5>
-                        <ul className="mt-1 space-y-1">
-                          {solution.items.map((item, itemIndex) => (
-                            <li key={itemIndex}>
+                {activeDropdown === "mob-industries" && (
+                  <ul
+                    id="mob-industries-panel"
+                    role="list"
+                    className="mt-1 ml-3 border-l-2 border-slate-200 dark:border-slate-300 pl-4 space-y-3 pb-2 max-h-64 overflow-y-auto"
+                  >
+                    {industriesData.map((industry) => (
+                      <li key={industry.title}>
+                        <p className="text-xs font-semibold text-green-800 dark:text-green-700 uppercase tracking-wide mb-1">
+                          {industry.title}
+                        </p>
+                        <ul role="list" className="space-y-0.5">
+                          {industry.items.map((item) => (
+                            <li key={item}>
                               <a
-                                href="#"
-                                className="text-xs text-muted-foreground hover:text-advance-primary transition-colors block py-1 ml-2"
+                                href="#industries"
+                                className={`block py-1 text-xs ${HEADER_TEXT} hover:text-red-800 dark:hover:text-red-700 transition-colors`}
+                                onClick={() => setIsMenuOpen(false)}
                               >
                                 {item}
                               </a>
                             </li>
                           ))}
                         </ul>
-                      </div>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
-              </div>
+              </li>
 
-              <a
-                href="#products"
-                className="text-foreground hover:text-advance-primary transition-colors"
-              >
-                Products
-              </a>
-              <a
-                href="#blog"
-                className="text-foreground hover:text-advance-primary transition-colors"
-              >
-                Blog
-              </a>
-              <Button className="bg-advance-primary hover:bg-advance-primary/90 text-white w-full">
-                Book a Demo
-              </Button>
-            </div>
+              <li>
+                <a
+                  href="#about"
+                  className={`block px-3 py-2.5 text-sm font-medium rounded ${HEADER_TEXT} hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#blog"
+                  className={`block px-3 py-2.5 text-sm font-medium rounded ${HEADER_TEXT} hover:bg-slate-100 dark:hover:bg-slate-200 transition-colors`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Blog
+                </a>
+              </li>
+
+              <li className="pt-2">
+                <Button
+                  className="bg-advance-primary hover:bg-advance-primary/90 text-white w-full"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Contact Us
+                </Button>
+              </li>
+
+            </ul>
           </nav>
         )}
       </div>
 
-      {/* Services Dropdown */}
+      {/* ── Services mega-dropdown ─────────────────────────────────────────── */}
       {activeDropdown === "services" && (
         <div
-          className="absolute left-0 w-full bg-background border-b border-border shadow-lg z-[60]"
-          onMouseEnter={() => handleMouseEnter("services")}
-          onMouseLeave={handleMouseLeave}
+          id="services-dropdown"
+          role="region"
+          aria-label="Services menu"
+          className="absolute left-0 w-full bg-white border-b border-slate-200 shadow-lg z-[60]"
+          onMouseEnter={() => openDropdown("services")}
+          onMouseLeave={closeDropdown}
         >
-          <div className="container mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              {servicesData.map((service, index) => (
-                <div key={index} className="space-y-3">
-                  <h4 className="font-medium text-advance-primary text-base">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl">
+              {servicesData.map((service) => (
+                <div key={service.title} className="space-y-2">
+                  <h4 className="text-sm font-semibold text-red-700">
                     {service.title}
                   </h4>
-                  <ul className="space-y-2">
-                    {service.items.map((item, itemIndex) => (
-                      <li key={itemIndex}>
+                  <ul className="space-y-1" role="list">
+                    {service.items.map((item) => (
+                      <li key={item}>
                         <a
-                          href="#"
-                          className="text-sm text-muted-foreground hover:text-advance-primary transition-colors block py-1"
+                          href="#services"
+                          className="text-sm text-slate-600 hover:text-red-700 transition-colors block py-0.5"
                         >
                           {item}
                         </a>
@@ -408,26 +476,29 @@ export function Header() {
         </div>
       )}
 
-      {/* Solutions Dropdown */}
-      {activeDropdown === "solutions" && (
+      {/* ── Industries mega-dropdown ───────────────────────────────────────── */}
+      {activeDropdown === "industries" && (
         <div
-          className="absolute left-0 w-full bg-background border-b border-border shadow-lg z-[60]"
-          onMouseEnter={() => handleMouseEnter("solutions")}
-          onMouseLeave={handleMouseLeave}
+          id="industries-dropdown"
+          role="region"
+          aria-label="Industries menu"
+          className="absolute left-0 w-full bg-white border-b border-slate-200 shadow-lg z-[60]"
+          onMouseEnter={() => openDropdown("industries")}
+          onMouseLeave={closeDropdown}
         >
-          <div className="container mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-              {solutionsData.map((solution, index) => (
-                <div key={index} className="space-y-3">
-                  <h4 className="font-medium text-advance-primary text-base">
-                    {solution.title}
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl">
+              {industriesData.map((industry) => (
+                <div key={industry.title} className="space-y-2">
+                  <h4 className="text-sm font-semibold text-green-800">
+                    {industry.title}
                   </h4>
-                  <ul className="space-y-2">
-                    {solution.items.map((item, itemIndex) => (
-                      <li key={itemIndex}>
+                  <ul className="space-y-1" role="list">
+                    {industry.items.map((item) => (
+                      <li key={item}>
                         <a
-                          href="#"
-                          className="text-sm text-muted-foreground hover:text-advance-primary transition-colors block py-1"
+                          href="#industries"
+                          className="text-sm text-slate-600 hover:text-red-700 transition-colors block py-0.5"
                         >
                           {item}
                         </a>

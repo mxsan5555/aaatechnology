@@ -7,48 +7,48 @@ import {
 
 const faqs = [
   {
-    question: "How can I contact customer support?",
+    question: "What is an IT Systems Audit?",
     answer:
-      "You can reach our customer support team 24/7 through multiple channels: email at support@advanceiot.com, phone at +1 (555) 123-4567, or through our live chat feature on the website. Our dedicated support team typically responds within 2 hours during business hours.",
+      "An IT Systems Audit is an examination of the management controls within an IT infrastructure. It evaluates whether your IT systems safeguard assets, maintain data integrity, and operate effectively to achieve organizational goals. AAA Technologies conducts comprehensive IT Systems Audits aligned with international standards.",
   },
   {
-    question: "What IoT services do you offer?",
+    question: "Why does my organization need a Cyber Security Audit?",
     answer:
-      "We provide a comprehensive range of IoT services, including device connectivity solutions, data analytics platforms, cloud infrastructure setup, security implementation, custom application development, and ongoing maintenance and support for IoT ecosystems.",
+      "A Cyber Security Audit provides management with an objective assessment of your organization's cyber security posture. It identifies vulnerabilities, evaluates existing controls, and provides actionable recommendations to protect against threats. With cyberattacks increasing in frequency and sophistication, regular audits are essential for any organization.",
   },
   {
-    question: "How secure are your IoT solutions?",
+    question: "Is AAA Technologies CERT-In empanelled?",
     answer:
-      "Security is our top priority. We implement enterprise-grade security measures including end-to-end encryption, secure device authentication, regular security audits, compliance with industry standards (ISO 27001, SOC 2), and continuous monitoring for threats and vulnerabilities.",
+      "Yes. AAA Technologies has been empanelled with CERT-In (Indian Computer Emergency Response Team) since 2005, making us one of India's most experienced and credentialed cyber security audit firms. This empanelment affirms our expertise and adherence to national cyber security standards.",
   },
   {
-    question: "What types of industries do you support?",
+    question: "What certifications does AAA Technologies hold?",
     answer:
-      "We serve diverse industries including manufacturing, healthcare, agriculture, smart cities, retail, logistics, energy, and automotive. Our solutions are customizable to meet specific industry requirements and regulatory compliance needs.",
+      "AAA Technologies is certified under ISO 9001:2015 (Quality Management) and ISO 27001:2013 (Information Security Management). We are also NSE and BSE Main Board listed — the first and only company in India listed exclusively for IT & Cyber Security Audit services.",
   },
   {
-    question: "Can your solutions integrate with existing systems?",
+    question: "How can I contact AAA Technologies?",
     answer:
-      "Our IoT solutions are designed with integration in mind. We support APIs, standard protocols, and can work with legacy systems. Our team conducts thorough compatibility assessments and provides seamless integration services to ensure minimal disruption to your existing operations.",
+      "You can reach us by phone at 022-28573815 / 16, or by email at info@aaatechnologies.co.in. Our office is located at 278-280, F Wing, Solaris 1, Saki Vihar Road, Opp. L&T Gate No.6, Powai, Andheri East, Mumbai 400072, India.",
   },
 ];
 
 export function FAQSection() {
   return (
-    <section id="faq" className="py-20 px-4 bg-background">
+    <section id="faq" aria-labelledby="faq-heading" className="py-20 px-4 bg-background">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left Content */}
           <div className="space-y-6">
-            <div className="text-sm text-advance-secondary font-medium">
+            <span className="text-xs font-bold uppercase tracking-widest text-advance-secondary" aria-hidden="true">
               FAQ
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-balance">
+            </span>
+            <h2 id="faq-heading" className="text-3xl md:text-4xl font-bold text-balance">
               Frequently Asked Questions
             </h2>
             <p className="text-muted-foreground text-lg text-pretty">
-              We compiled a list of answers to address your most pressing
-              questions regarding our IoT consulting services and solutions.
+              Answers to the most common questions about our IT audit, cyber
+              security, and compliance services.
             </p>
           </div>
 

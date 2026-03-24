@@ -4,100 +4,156 @@
 
 :root {
   --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
+  --foreground: 0 0% 8%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
+  --card-foreground: 0 0% 8%;
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 3.9%;
-  --primary: 221 83% 53%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 210 40% 98%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 210 40% 98%;
+  --popover-foreground: 0 0% 8%;
+  --primary: 0 97% 58%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 155 100% 25%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 96%;
   --muted-foreground: 0 0% 45%;
-  --accent: 210 40% 98%;
-  --accent-foreground: 0 0% 9%;
+  --accent: 155 100% 95%;
+  --accent-foreground: 155 100% 20%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  --ring: 0 0% 63%;
-  --radius: 0;
-  
-  /* Custom Advance IOT brand colors */
-  --advance-primary: #00509d;
-  --advance-secondary: #fdc500;
-  --advance-neutral: #6b7280;
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 0 97% 58%;
+  --radius: 0rem;
+
+  /* AAA Technologies brand colors */
+  --aaa-primary: #fc2b2a;
+  --aaa-secondary: #008253;
+  --aaa-tertiary: #008253;
+  --aaa-neutral: #64748b;
+
+  /* Legacy aliases — keeps existing component classes working */
+  --advance-primary: var(--aaa-primary);
+  --advance-secondary: var(--aaa-secondary);
+  --advance-neutral: var(--aaa-neutral);
 }
 
 .dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 0 0% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 221 83% 53%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 215 27% 17%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 215 27% 17%;
-  --muted-foreground: 0 0% 63%;
-  --accent: 215 27% 17%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 63% 31%;
+  --background: 0 0% 7%;
+  --foreground: 0 0% 96%;
+  --card: 0 0% 10%;
+  --card-foreground: 0 0% 96%;
+  --popover: 0 0% 10%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 0 97% 65%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 155 80% 35%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 60%;
+  --accent: 155 50% 15%;
+  --accent-foreground: 155 80% 60%;
+  --destructive: 0 63% 40%;
   --destructive-foreground: 0 0% 98%;
-  --border: 215 27% 17%;
-  --input: 215 27% 17%;
-  --ring: 0 0% 51%;
-  
-  /* Custom Advance IOT brand colors for dark mode */
-  --advance-primary: #3b82f6;
-  --advance-secondary: #fbbf24;
-  --advance-neutral: #9ca3af;
+  --border: 0 0% 18%;
+  --input: 0 0% 18%;
+  --ring: 0 97% 65%;
+
+  /* AAA Technologies brand colors — dark mode */
+  --aaa-primary: #ff5c5b;
+  --aaa-secondary: #00a86e;
+  --aaa-tertiary: #00a86e;
+  --aaa-neutral: #94a3b8;
+
+  --advance-primary: var(--aaa-primary);
+  --advance-secondary: var(--aaa-secondary);
+  --advance-neutral: var(--aaa-neutral);
 }
 
-
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  /* WCAG 2.4.1 — Skip navigation */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 9999;
+    padding: 0.5rem 1.25rem;
+    background: var(--aaa-primary);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0 0 var(--radius) var(--radius);
+    text-decoration: none;
+    transition: top 0.2s;
+  }
+  .skip-link:focus {
+    top: 0;
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
+
+  /* WCAG 2.4.7 — Visible focus indicator */
+  :focus-visible {
+    outline: 2px solid var(--aaa-primary);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* WCAG 2.3.3 — Respect prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 }
 
-/* Added custom utility classes for brand colors */
 @layer utilities {
-  .text-advance-primary {
-    color: var(--advance-primary);
-  }
-  .bg-advance-primary {
-    background-color: var(--advance-primary);
-  }
-  .border-advance-primary {
-    border-color: var(--advance-primary);
-  }
-  .text-advance-secondary {
-    color: var(--advance-secondary);
-  }
-  .bg-advance-secondary {
-    background-color: var(--advance-secondary);
-  }
-  .border-advance-secondary {
-    border-color: var(--advance-secondary);
-  }
-  .text-advance-neutral {
-    color: var(--advance-neutral);
-  }
-  .bg-advance-neutral {
-    background-color: var(--advance-neutral);
-  }
-  .border-advance-neutral {
-    border-color: var(--advance-neutral);
-  }
+  /* Primary — Red #fc2b2a */
+  .text-aaa-primary      { color: var(--aaa-primary); }
+  .bg-aaa-primary        { background-color: var(--aaa-primary); }
+  .border-aaa-primary    { border-color: var(--aaa-primary); }
+
+  /* Secondary — Green #008253 */
+  .text-aaa-secondary    { color: var(--aaa-secondary); }
+  .bg-aaa-secondary      { background-color: var(--aaa-secondary); }
+  .border-aaa-secondary  { border-color: var(--aaa-secondary); }
+
+  /* Tertiary — Green #008253 */
+  .text-aaa-tertiary     { color: var(--aaa-tertiary); }
+  .bg-aaa-tertiary       { background-color: var(--aaa-tertiary); }
+  .border-aaa-tertiary   { border-color: var(--aaa-tertiary); }
+
+  /* Neutral */
+  .text-aaa-neutral      { color: var(--aaa-neutral); }
+  .bg-aaa-neutral        { background-color: var(--aaa-neutral); }
+  .border-aaa-neutral    { border-color: var(--aaa-neutral); }
+
+  /* Legacy aliases — keeps existing component classes working */
+  .text-advance-primary    { color: var(--aaa-primary); }
+  .bg-advance-primary      { background-color: var(--aaa-primary); }
+  .border-advance-primary  { border-color: var(--aaa-primary); }
+  .text-advance-secondary  { color: var(--aaa-secondary); }
+  .bg-advance-secondary    { background-color: var(--aaa-secondary); }
+  .border-advance-secondary { border-color: var(--aaa-secondary); }
+  .text-advance-neutral    { color: var(--aaa-neutral); }
+  .bg-advance-neutral      { background-color: var(--aaa-neutral); }
+  .border-advance-neutral  { border-color: var(--aaa-neutral); }
 }

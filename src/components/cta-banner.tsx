@@ -30,6 +30,8 @@ export function CTABanner() {
   return (
     <section
       ref={parallaxRef}
+      id="cta"
+      aria-labelledby="cta-heading"
       className="py-20 px-4 bg-advance-primary text-white relative overflow-hidden"
       style={{
         backgroundImage: "url('/banner-4.jpg')",
@@ -42,14 +44,14 @@ export function CTABanner() {
         <div className="grid lg:grid-cols-1 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-balance">
-              Build smart, learn fast, win big and stay in control of your AI
-              with governance.
+            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold text-balance">
+              Strengthen your IT security posture with India's most trusted
+              independent audit firm.
             </h2>
             <p className="text-lg text-white/90 text-pretty">
-              Embark on a transformative journey with us as we guide you to
-              unlock your inherent potential, paving the way for empowered
-              success and sustainable growth.
+              With over 22 years of experience, CERT-In empanelment since 2005,
+              and ISO-certified processes, AAA Technologies delivers audits you
+              can rely on — across 25+ industry sectors nationwide.
             </p>
           </div>
 
@@ -60,11 +62,11 @@ export function CTABanner() {
                 variant="ghost"
                 className="text-white border-white hover:bg-white hover:text-advance-primary"
               >
-                <Play className="h-4 w-4 mr-2" />
+                <Play className="h-4 w-4 mr-2" aria-hidden="true" />
                 Know More
               </Button>
               <Button className="bg-advance-secondary hover:bg-advance-secondary/90 text-black">
-                Get Started
+                Request an Audit
               </Button>
             </div>
           </div>

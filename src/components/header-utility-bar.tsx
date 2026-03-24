@@ -49,11 +49,11 @@ export function HeaderUtilityBar() {
       <div className="container mx-auto flex justify-end items-center gap-6 text-sm">
         <div className="flex items-center gap-2">
           <Phone className="h-4 w-4" />
-          <span>+1 (555) 123-4567</span>
+          <span>022-28573815 / 16</span>
         </div>
         <div className="flex items-center gap-2">
           <Mail className="h-4 w-4" />
-          <span>info@advanceiot.com</span>
+          <span>info@aaatechnologies.co.in</span>
         </div>
         <div 
           className="relative" 

@@ -4,61 +4,61 @@ import { Quote } from "lucide-react";
 
 const testimonials = [
   {
-    metric: "8X",
-    metricLabel: "Increase in operational efficiency",
+    metric: "22+",
+    metricLabel: "Years of independent IT audit expertise",
     quote:
-      "We needed a modern, high-performing IoT solution, and the Advance IOT team delivered beyond expectations. Their expertise helped us increase operational efficiency by 800% in just two weeks. Highly recommend!",
-    author: "David Callahan",
-    role: "Operations Director, TechCorp",
-    avatar: "./public/professional-man.png",
-    size: "large", // Added size property for grid layout
+      "AAA Technologies has been our trusted IT audit partner for years. Their CERT-In empanelled team brings unmatched depth in cyber security auditing. Their assessments have helped us significantly strengthen our information security posture.",
+    author: "Anjay Agarwal",
+    role: "Chairman & Managing Director, AAA Technologies Limited",
+    avatar: "",
+    size: "large",
   },
   {
-    metric: "2X",
-    metricLabel: "Increase in data processing speed",
+    metric: "25+",
+    metricLabel: "Industry sectors served across India",
     quote:
-      "From planning to implementation, every detail was meticulously handled. The team's expertise helped us achieve faster data processing, and the results have been phenomenal!",
-    author: "Sarah Mitchell",
-    role: "CTO, DataFlow Solutions",
-    avatar: "./public/professional-woman-diverse.png",
-    size: "medium", // Added size property for grid layout
+      "Their structured IT governance framework and compliance advisory helped us align with regulatory requirements seamlessly. The team's knowledge of industry-specific compliance is exceptional.",
+    author: "Senior IT Head",
+    role: "Leading Public Sector Bank, Mumbai",
+    avatar: "",
+    size: "medium",
   },
   {
-    metric: "95%",
-    metricLabel: "Reduction in system downtime",
+    metric: "1000+",
+    metricLabel: "Cumulative man-years of audit experience",
     quote:
-      "Their innovative approach took our infrastructure to the next level. The team fully understands enterprise needs and delivered a solution that reduced our system downtime significantly.",
-    author: "Tom Becker",
-    role: "IT Director, Enterprise Plus",
-    avatar: "./public/professional-man-glasses.png",
-    size: "medium", // Added size property for grid layout
+      "The cyber security audit conducted by AAA Technologies uncovered critical vulnerabilities we had overlooked. Their detailed reporting and remediation roadmap gave us the clarity we needed.",
+    author: "CISO",
+    role: "Major Healthcare Enterprise, India",
+    avatar: "",
+    size: "medium",
   },
   {
-    metric: "3X",
-    metricLabel: "Faster deployment cycles",
+    metric: "NSE & BSE",
+    metricLabel: "Listed — India's only listed IT audit firm",
     quote:
-      "The team nailed our MVP design with a fast turnaround and incredible attention to detail. The final solution felt polished and professional, exceeding our expectations.",
-    author: "Lisa Chen",
-    role: "Product Manager, InnovateTech",
-    avatar: "./public/professional-asian-woman.png",
-    size: "dark", // Added size property for dark themed card
+      "AAA Technologies is a pioneer in the IT audit space. Being the first and only listed company exclusively focused on IT & Cyber Security Audit speaks volumes about their credibility and institutional trust.",
+    author: "IT Governance Expert",
+    role: "Fortune 500 Manufacturing Company",
+    avatar: "",
+    size: "dark",
   },
 ];
 
 export function SuccessStories() {
   return (
-    <section id="success-stories" className="py-20 px-4 bg-muted/30">
+    <section id="success-stories" aria-labelledby="stories-heading" className="py-20 px-4 bg-muted/30">
       <div className="container mx-auto">
         <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-balance">
-            Results that speak volumes
+          <span className="text-xs font-bold uppercase tracking-widest text-advance-secondary" aria-hidden="true">
+            Client success stories
+          </span>
+          <h2 id="stories-heading" className="text-3xl md:text-4xl font-bold text-balance">
+            Trusted by enterprises across India
           </h2>
-          <p className="text-advance-secondary text-lg font-medium">
-            Read success stories
-          </p>
           <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Find out how our satisfied clients are achieving remarkable results
-            with our solutions.
+            See how organizations across banking, healthcare, manufacturing, and
+            government sectors strengthen their IT security with AAA Technologies.
           </p>
         </div>
 
@@ -77,7 +77,7 @@ export function SuccessStories() {
                 </div>
 
                 <div className="space-y-4">
-                  <Quote className="h-6 w-6 text-advance-secondary" />
+                  <Quote className="h-6 w-6 text-advance-secondary" aria-hidden="true" />
                   <blockquote className="text-muted-foreground text-pretty leading-relaxed">
                     "{testimonials[0].quote}"
                   </blockquote>
@@ -123,7 +123,7 @@ export function SuccessStories() {
                       {testimonials[1].metricLabel}
                     </div>
                   </div>
-                  <Quote className="h-5 w-5 text-advance-secondary flex-shrink-0" />
+                  <Quote className="h-5 w-5 text-advance-secondary flex-shrink-0" aria-hidden="true" />
                 </div>
 
                 <blockquote className="text-muted-foreground text-pretty leading-relaxed text-sm">
